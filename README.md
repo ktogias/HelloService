@@ -13,3 +13,11 @@ podman run --publish 8080:80 hello-prod
 ## View production in browser:
 
 http://localhost:8080
+
+## How to build test image:
+
+ podman build -t hello-test -f Dockerfile.test
+
+## How to run tests
+
+podman run --publish 8080:80 hello-test ./vendor/bin/codecept run
