@@ -10,6 +10,14 @@ Provides a json api to get the "hello" string
 
     podman run --publish 8080:80 --volume ./php:/php:Z hello-dev
 
+## Run tests from dev
+
+    podman run --volume ./php:/php:Z hello-dev ./vendor/bin/codecept run
+
+## Run shell in dev
+
+    podman run -it --volume ./php:/php:Z hello-dev bash
+
 ## View live dev in browser:
 
 http://localhost:8080
