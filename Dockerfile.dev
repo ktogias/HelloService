@@ -8,5 +8,5 @@ RUN docker-php-ext-install zip && docker-php-ext-enable zip
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 WORKDIR /php
-        
+
 CMD ["php", "-S", "0.0.0.0:80", "src/hello.php"]
