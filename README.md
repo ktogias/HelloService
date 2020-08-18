@@ -4,7 +4,7 @@ Provides a json api to get the "hello" string
 
 ## How to build dev image:
 
-    podman build -t hello-dev -f Dockerfile.dev
+    podman build -t hello-dev --target dev .
 
 ## How to run dev image
 
@@ -24,7 +24,7 @@ http://localhost:8080
 
 ## How to build test image:
 
-    podman build -t hello-test -f Dockerfile.test
+    podman build -t hello-test --target test .
 
 ## How to run unit tests
 
@@ -41,7 +41,7 @@ http://localhost:8080
 
 ## How to build production image:
 
-    podman build -t hello-prod -f Dockerfile.prod 
+    podman build -t hello-prod --target prod .
 
 ## How to run production image:
 
