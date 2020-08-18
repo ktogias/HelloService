@@ -4,11 +4,11 @@ Provides a json api to get the "hello" string
 
 ## How to build dev image:
 
- podman build -t hello-dev -f Dockerfile.dev
+    podman build -t hello-dev -f Dockerfile.dev
 
 ## How to run dev
 
-podman run --publish 8080:80 --volume ./php:/php:Z hello-dev
+    podman run --publish 8080:80 --volume ./php:/php:Z hello-dev
 
 ## View live dev in browser:
 
