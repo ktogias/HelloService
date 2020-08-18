@@ -1,16 +1,13 @@
 FROM php:7.4-cli
 MAINTAINER ktogias
 
-WORKDIR /php
-COPY ./php /php
 EXPOSE 80
 
 RUN apt update && apt install zip libzip-dev -y
 RUN docker-php-ext-install zip && docker-php-ext-enable zip
 
+WORKDIR /php
+COPY ./php /php
 RUN php composer.phar install --optimize-autoloader
-
-# WORKDIR /php
-# COPY ./php /php
-# EXPOSE 80
-# CMD ["php", "-S", "0.0.0.0:80", "hello.php"]
+        
+CMD ["php", "-S", "0.0.0.0:80", "hello.php"]
