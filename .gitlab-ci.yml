@@ -1,0 +1,11 @@
+before_script:
+  - docker info
+
+build_image:
+    script: 
+        - docker build -t hello-test --target test .
+        - docker run --name hello-test --rm hello-test
+        - docker exec hello-test ./vendor/bin/codecept run --xml --coverage --coverage-html --coverage-xml
+        - docker stop hello-test
+
+        
