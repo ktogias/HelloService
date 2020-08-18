@@ -7,7 +7,5 @@ RUN apt update && apt install zip libzip-dev -y
 RUN docker-php-ext-install zip && docker-php-ext-enable zip
 
 WORKDIR /php
-COPY ./php /php
-RUN php composer.phar install --optimize-autoloader
         
 CMD ["php", "-S", "0.0.0.0:80", "src/hello.php"]
