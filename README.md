@@ -28,7 +28,7 @@ http://localhost:8080
 
 ## How to run tests
 
-    podman run --publish 8080:80 hello-test ./vendor/bin/codecept run
+    podman run hello-test ./vendor/bin/codecept run
 
 ## How to build production image:
 

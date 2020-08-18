@@ -5,6 +5,7 @@ EXPOSE 80
 
 RUN apt update && apt install zip libzip-dev -y
 RUN docker-php-ext-install zip && docker-php-ext-enable zip
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 WORKDIR /php
 COPY ./php /php
