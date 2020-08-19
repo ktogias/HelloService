@@ -1,18 +1,25 @@
+stages:
+    - prepare
+    - build
+    - test
+
 before_script:
   - docker info
   
 merge_master:
+    stage: prepare
     except: 
         - master
     script: 
         git checkout trunk
 
 build_test_image:
+    stage: build
     script: 
         - docker build -t hello-test --target test .lal
         
 run_tests:
-    needs: ["build_test_image"]
+    stage: test
     script: 
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run --xml --coverage --coverage-html --coverage-xml
