@@ -2,8 +2,9 @@ stages:
     - prepare
     - build
     - test
+    - push
  
-merge_master:
+prepare_trunk:
     stage: prepare
     except: 
         - master
@@ -28,3 +29,10 @@ run_tests:
         - docker exec hello-test ./vendor/bin/codecept run --xml --coverage --coverage-html --coverage-xml
     after_script:
         - docker stop hello-test
+        
+push_to_trunk:
+    stage: push
+    except: 
+        - master
+    script: 
+        - git push origin trunk
