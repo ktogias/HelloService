@@ -30,7 +30,4 @@ class HelloTest extends \Codeception\Test\Unit
        $this->assertContains('Content-Type: application/json', $headers);
     }
     
-    public function testIncomplete(){
-        $this->markTestIncomplete();
-    }
 }
