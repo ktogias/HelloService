@@ -6,6 +6,6 @@ build_image:
         - docker build -t hello-test --target test .
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run --xml --coverage --coverage-html --coverage-xml
-        - docker stop hello-test
 
-        
+after_script:
+    - docker stop hello-test
