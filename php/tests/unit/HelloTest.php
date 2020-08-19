@@ -29,4 +29,8 @@ class HelloTest extends \Codeception\Test\Unit
        $headers=xdebug_get_headers();
        $this->assertContains('Content-Type: application/json', $headers);
     }
+    
+    public function testIncomplete(){
+        $this->markTestIncomplete();
+    }
 }
