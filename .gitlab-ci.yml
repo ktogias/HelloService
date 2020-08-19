@@ -37,5 +37,4 @@ push_to_trunk:
     script: 
         - git config --global user.name "cirunner"
         - git config --global user.email "gitlab-runner@ntsdev2.sch.gr"
-        - git remote set-url 
         - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git PipelineTest
