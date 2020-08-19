@@ -16,7 +16,7 @@ merge_master:
 build_test_image:
     stage: build
     script: 
-        - docker build -t hello-test --target test .lal
+        - docker build -t hello-test --target test .
         
 run_tests:
     stage: test
