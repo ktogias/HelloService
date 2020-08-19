@@ -28,6 +28,5 @@ class HelloTest extends \Codeception\Test\Unit
     public function testShouldSetApplicationJsonContentTypeHeader(){
        $headers=xdebug_get_headers();
        $this->assertContains('Content-Type: application/json', $headers);
-       $this->assertTrue(false);
     }
 }
