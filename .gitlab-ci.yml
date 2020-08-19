@@ -22,6 +22,7 @@ merge_push_trunk:
     stage: push
     except: 
         - master
+        - trunk
     script: 
         - git fetch
         - git checkout trunk
