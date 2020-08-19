@@ -9,7 +9,7 @@ merge_master:
 
 build_test_image:
     script: 
-        - docker build -t hello-test --target test .
+        - docker build -t hello-test --target test .lal
         
 run_tests:
     script: 
