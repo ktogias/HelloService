@@ -2,19 +2,21 @@ stages:
     - prepare
     - build
     - test
-
-before_script:
-  - docker info
-  
+ 
 merge_master:
     stage: prepare
     except: 
         - master
     script: 
-        git checkout trunk
+        - git pull
+        - git checkout trunk
+        - git merge master
+        - git merge origin/$CI_COMMIT_REF_NAME
 
 build_test_image:
     stage: build
+    before_script:
+        - docker info
     script: 
         - docker build -t hello-test --target test .
         
@@ -23,6 +25,5 @@ run_tests:
     script: 
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run --xml --coverage --coverage-html --coverage-xml
-
-after_script:
-    - docker stop hello-test
+    after_script:
+        - docker stop hello-test
