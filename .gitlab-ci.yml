@@ -35,8 +35,7 @@ push_to_trunk:
     except: 
         - master
     script: 
-        - export CI_PUSH_REPO=`echo $CI_BUILD_REPO | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#'`
-        - echo $CI_PUSH_REPO
         - git config --global user.name "cirunner"
         - git config --global user.email "gitlab-runner@ntsdev2.sch.gr"
-        - git push origin "${CI_PUSH_REPO}"
+        - git remote set-url 
+        - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git PipelineTest
