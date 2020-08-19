@@ -11,12 +11,9 @@ build_test_image:
     script: 
         - docker build -t hello-test --target test .
         
-run_test_image:
+run_tests:
     script: 
         - docker run -d --name hello-test --rm hello-test
-
-execute_tests:
-    script: 
         - docker exec hello-test ./vendor/bin/codecept run --xml --coverage --coverage-html --coverage-xml
 
 after_script:
