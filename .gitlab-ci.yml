@@ -8,8 +8,9 @@ merge_master:
     except: 
         - master
     script: 
-        - git pull
+        - git fetch
         - git checkout trunk
+        - git pull
         - git merge master
         - git merge origin/$CI_COMMIT_REF_NAME
 
