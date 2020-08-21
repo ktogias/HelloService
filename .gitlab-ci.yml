@@ -17,6 +17,7 @@ Build test image:
 Run unit tests:
     stage: Unit test
     script: 
+        - docker rm hello-test || true
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
     #after_script:
@@ -25,6 +26,7 @@ Run unit tests:
 Run functional tests:
     stage: Functional test
     script: 
+        - docker rm hello-test || true
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
     after_script:
@@ -33,6 +35,7 @@ Run functional tests:
 Run acceptance tests:
     stage: Acceptance test
     script: 
+        - docker rm hello-test || true
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run acceptance
     after_script:
