@@ -14,6 +14,5 @@ class HelloCest
         $I->canSeeResponseCodeIsSuccessful();
         $content = json_decode($I->grabPageSource());
         \PHPUnit\Framework\assertNotEmpty($content);
-        \PHPUnit\Framework\assertTrue(false);
     }
 }
