@@ -4,7 +4,6 @@ stages:
     - Functional test
     - Acceptance test
     - Merge and push
-    - Publish test results
     - Clean up test environment
     
 Build test image:
