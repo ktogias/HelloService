@@ -11,7 +11,7 @@ before_script:
 Build test image:
     stage: Prepare test envronment
     script: 
-        - docker rm hello-test
+        - docker stop hello-test || true && docker rm hello-test || true
         - docker build -t hello-test --target test .
            
 Run unit tests:
