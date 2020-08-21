@@ -57,7 +57,7 @@ pages:
     stage: Publish test results
     script:
         - mkdir public
-        - cat "Test" > public/index.html
+        - echo "Test" > public/index.html
     artifacts:
         paths:
           - public
