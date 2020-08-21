@@ -8,7 +8,7 @@ Provides a json api to get the "hello" string
 
 ## How to run dev image
 
-    podman run --publish 8080:80 --volume ./php:/php:Z --name hello-dev --rm hello-dev
+    podman run -d --publish 8080:80 --volume ./php:/php:Z --name hello-dev --rm hello-dev
 
 ## Run tests from dev
 
