@@ -18,24 +18,18 @@ Run unit tests:
     script: 
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
-    after_script:
-        - docker stop hello-test
         
 Run functional tests:
     stage: Functional test
     script: 
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
-    after_script:
-        - docker stop hello-test
         
 Run acceptance tests:
     stage: Acceptance test
     script: 
         - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run acceptance
-    after_script:
-        - docker stop hello-test
 
 Merge and push trunk:
     stage: Merge and push
