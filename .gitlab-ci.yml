@@ -4,6 +4,7 @@ stages:
     - Functional test
     - Acceptance test
     - Merge and push
+    - Clean up test environment
     
 Build test image:
     stage: Prepare test environment
@@ -63,6 +64,8 @@ Run acceptance tests:
 Clean up after acceptance tests failure:
     stage: Merge and push
     when: on_failure
+    except: 
+        - trunk
     script: 
         - docker stop hello-test-$CI_COMMIT_SHA || true 
         - docker rm hello-test-$CI_COMMIT_SHA || true
@@ -81,3 +84,12 @@ Merge and push trunk:
         - git config --global user.name "cirunner"
         - git config --global user.email "gitlab-runner@ntsdev2.sch.gr"
         - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git HEAD:trunk   
+
+
+Clean up:
+    stage: Clean up test environment
+    script: 
+        - docker stop hello-test-$CI_COMMIT_SHA
+        - docker rm hello-test-$CI_COMMIT_SHA
+        - docker rmi hello-test-$CI_COMMIT_SHA
+    
