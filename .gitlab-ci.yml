@@ -4,6 +4,7 @@ stages:
     - Functional test
     - Acceptance test
     - Merge and push
+    - Publish test results
     - Clean up test environment
     
 Build test image:
@@ -51,3 +52,12 @@ Clean up:
         - docker rm hello-test-$CI_COMMIT_SHA || true
         - docker rmi hello-test-$CI_COMMIT_SHA
     
+    
+pages:
+    stage: Publish test results
+    script:
+        - mkdir public
+        - cat "Test" > public/index.html
+    artifacts:
+        paths:
+          - public
