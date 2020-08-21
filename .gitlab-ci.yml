@@ -8,26 +8,34 @@ stages:
 before_script:
     - docker info
 
-Build and run test image:
+Build test image:
     stage: Prepare test envronment
     script: 
         - docker build -t hello-test --target test .
-        - docker run -d --name hello-test --rm hello-test
-      
+           
 Run unit tests:
     stage: Unit test
     script: 
+        - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
+    after_script:
+        - docker stop hello-test
         
 Run functional tests:
     stage: Functional test
     script: 
+        - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
+    after_script:
+        - docker stop hello-test
         
 Run acceptance tests:
     stage: Acceptance test
     script: 
+        - docker run -d --name hello-test --rm hello-test
         - docker exec hello-test ./vendor/bin/codecept run acceptance
+    after_script:
+        - docker stop hello-test
 
 Merge and push trunk:
     stage: Merge and push
@@ -41,7 +49,4 @@ Merge and push trunk:
         - git merge origin/$CI_COMMIT_REF_NAME
         - git config --global user.name "cirunner"
         - git config --global user.email "gitlab-runner@ntsdev2.sch.gr"
-        - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git HEAD:trunk
-        
-after_script:
-    - docker stop hello-test
+        - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git HEAD:trunk   
