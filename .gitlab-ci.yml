@@ -13,63 +13,21 @@ Build test image:
     script: 
         - docker build -t hello-test-$CI_COMMIT_SHA --target test .
         - docker run -d --name hello-test-$CI_COMMIT_SHA --rm hello-test-$CI_COMMIT_SHA
-        
-Clean up after build test image failure:
-    stage: Unit test
-    when: on_failure
-    script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
-        - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
-           
+            
 Run unit tests:
     stage: Unit test
     script: 
-    #    - docker rm hello-test || true
-    #    - docker run -d --name hello-test --rm hello-test || true
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
-    #after_script:
-    #    - docker stop hello-test
-
-Clean up after unit tests failure:
-    stage: Functional test
-    when: on_failure
-    script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
-        - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
-        
+       
 Run functional tests:
     stage: Functional test
     script: 
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
-    #after_script:
-    #    - docker stop hello-test
-    
-Clean up after functional tests failure:
-    stage: Acceptance test
-    when: on_failure
-    script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
-        - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
-        
+          
 Run acceptance tests:
     stage: Acceptance test
     script: 
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run acceptance
-    #after_script:
-    #    - docker stop hello-test
-    
-Clean up after acceptance tests failure:
-    stage: Merge and push
-    when: on_failure
-    except: 
-        - trunk
-    script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
-        - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
 
 Merge and push trunk:
     stage: Merge and push
@@ -85,9 +43,9 @@ Merge and push trunk:
         - git config --global user.email "gitlab-runner@ntsdev2.sch.gr"
         - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git HEAD:trunk   
 
-
 Clean up:
     stage: Clean up test environment
+    when: always
     script: 
         - docker stop hello-test-$CI_COMMIT_SHA
         - docker rm hello-test-$CI_COMMIT_SHA || true
