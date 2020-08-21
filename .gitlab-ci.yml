@@ -21,45 +21,55 @@ Clean up after build test image failure:
         - docker stop hello-test-$CI_COMMIT_SHA || true 
         - docker rm hello-test-$CI_COMMIT_SHA || true
         - docker rmi hello-test-$CI_COMMIT_SHA || true
+        
+Fail after build test image failure:
+    stage: Unit test
+    when: on_failure
+    script: 
+        - (exit 1)
            
 Run unit tests:
     stage: Unit test
     script: 
-    #    - docker rm hello-test || true
-    #    - docker run -d --name hello-test --rm hello-test || true
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
-    #after_script:
-    #    - docker stop hello-test
 
 Clean up after unit tests failure:
     stage: Functional test
     when: on_failure
     script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
+        - docker stop hello-test-$CI_COMMIT_SHA 
         - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
+        - docker rmi hello-test-$CI_COMMIT_SHA 
+        
+Fail after unit tests failure:
+    stage: Functional test
+    when: on_failure
+    script: 
+        - (exit 1)
         
 Run functional tests:
     stage: Functional test
     script: 
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
-    #after_script:
-    #    - docker stop hello-test
     
 Clean up after functional tests failure:
     stage: Acceptance test
     when: on_failure
     script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
+        - docker stop hello-test-$CI_COMMIT_SHA 
         - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
+        - docker rmi hello-test-$CI_COMMIT_SHA 
+        
+Fail after functional tests failure:
+    stage: Acceptance test
+    when: on_failure
+    script: 
+        - (exit 1)
         
 Run acceptance tests:
     stage: Acceptance test
     script: 
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run acceptance
-    #after_script:
-    #    - docker stop hello-test
     
 Clean up after acceptance tests failure:
     stage: Merge and push
@@ -67,9 +77,15 @@ Clean up after acceptance tests failure:
     except: 
         - trunk
     script: 
-        - docker stop hello-test-$CI_COMMIT_SHA || true 
+        - docker stop hello-test-$CI_COMMIT_SHA 
         - docker rm hello-test-$CI_COMMIT_SHA || true
-        - docker rmi hello-test-$CI_COMMIT_SHA || true
+        - docker rmi hello-test-$CI_COMMIT_SHA 
+        
+Fail after acceptance tests failure:
+    stage: Merge and push
+    when: on_failure
+    script: 
+        - (exit 1)
 
 Merge and push trunk:
     stage: Merge and push
