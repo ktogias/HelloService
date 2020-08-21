@@ -11,34 +11,29 @@ before_script:
 Build test image:
     stage: Prepare test envronment
     script: 
-        - docker stop hello-test || true && docker rm hello-test || true
-        - docker build -t hello-test --target test .
-        - docker run -d --name hello-test --rm hello-test
+        - docker build -t hello-test-$CI_COMMIT_SHA --target test .
+        - docker run -d --name hello-test-$CI_COMMIT_SHA --rm hello-test-$CI_COMMIT_SHA
            
 Run unit tests:
     stage: Unit test
     script: 
-        - docker rm hello-test || true
-        - docker run -d --name hello-test --rm hello-test || true
-        - docker exec hello-test ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
+    #    - docker rm hello-test || true
+    #    - docker run -d --name hello-test --rm hello-test || true
+        - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
     #after_script:
     #    - docker stop hello-test
         
 Run functional tests:
     stage: Functional test
     script: 
-        - docker rm hello-test || true
-        - docker run -d --name hello-test --rm hello-test || true
-        - docker exec hello-test ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
-    after_script:
-        - docker stop hello-test
+        - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
+    #after_script:
+    #    - docker stop hello-test
         
 Run acceptance tests:
     stage: Acceptance test
     script: 
-        - docker rm hello-test || true
-        - docker run -d --name hello-test --rm hello-test || true
-        - docker exec hello-test ./vendor/bin/codecept run acceptance
+        - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run acceptance
     #after_script:
     #    - docker stop hello-test
 
@@ -57,4 +52,6 @@ Merge and push trunk:
         - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git HEAD:trunk   
         
 after_script:
-    - docker stop hello-test || true && docker rm hello-test || true
+    - docker stop hello-test-$CI_COMMIT_SHA || true 
+    - docker rm hello-test-$CI_COMMIT_SHA || true
+    - docker rmi hello-test-$CI_COMMIT_SHA || true
