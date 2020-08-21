@@ -13,19 +13,22 @@ Build test image:
     script: 
         - docker stop hello-test || true && docker rm hello-test || true
         - docker build -t hello-test --target test .
+        - docker run -d --name hello-test --rm hello-test
            
 Run unit tests:
     stage: Unit test
     script: 
-        - docker run -d --name hello-test --rm hello-test
+        - docker rm hello-test || true
+        - docker run -d --name hello-test --rm hello-test || true
         - docker exec hello-test ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
-    after_script:
-        - docker stop hello-test
+    #after_script:
+    #    - docker stop hello-test
         
 Run functional tests:
     stage: Functional test
     script: 
-        - docker run -d --name hello-test --rm hello-test
+        - docker rm hello-test || true
+        - docker run -d --name hello-test --rm hello-test || true
         - docker exec hello-test ./vendor/bin/codecept run functional --xml --coverage --coverage-html --coverage-xml
     after_script:
         - docker stop hello-test
@@ -33,10 +36,11 @@ Run functional tests:
 Run acceptance tests:
     stage: Acceptance test
     script: 
-        - docker run -d --name hello-test --rm hello-test
+        - docker rm hello-test || true
+        - docker run -d --name hello-test --rm hello-test || true
         - docker exec hello-test ./vendor/bin/codecept run acceptance
-    after_script:
-        - docker stop hello-test
+    #after_script:
+    #    - docker stop hello-test
 
 Merge and push trunk:
     stage: Merge and push
@@ -51,3 +55,6 @@ Merge and push trunk:
         - git config --global user.name "cirunner"
         - git config --global user.email "gitlab-runner@ntsdev2.sch.gr"
         - git push git@150.140.26.209:Microservices/HelloWorld/HelloService.git HEAD:trunk   
+        
+after_script:
+    - docker stop hello-test || true && docker rm hello-test || true
