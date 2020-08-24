@@ -5,8 +5,7 @@ then
     echo "Code coverage below 70%"
     exit 1
 fi
-cp $2 previous_coverage.xml
-PREVIOUS_RATIO=$(bash ./util/compute_code_coverage.sh ./previous_coverage.xml)
+PREVIOUS_RATIO=$(bash ./util/compute_code_coverage.sh $2)
 echo $PREVIOUS_RATIO
 DIFF=$(bc <<< $PREVIOUS_RATIO - $RATIO)
 echo $DIFF
