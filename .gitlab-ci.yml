@@ -18,6 +18,7 @@ Run unit tests:
     stage: Unit test
     script: 
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
+        - echo $(docker exec hello-test-$CI_COMMIT_SHA ./util/compute_code_coverage.sh)
        
 Run functional tests:
     stage: Functional test
