@@ -1,4 +1,4 @@
-ELEMENTS=$(xmllint --xpath "string(/coverage/project/metrics/@elements)" ./php/tests/_output/coverage.xml)
-COVEREDELEMENTS=$(xmllint --xpath "string(/coverage/project/metrics/@coveredelements)" ./php/tests/_output/coverage.xml)
+ELEMENTS=$(xmllint --xpath "string(/coverage/project/metrics/@elements)" $1)
+COVEREDELEMENTS=$(xmllint --xpath "string(/coverage/project/metrics/@coveredelements)" $1)
 RATIO=$(bc <<< 'scale=4; '$COVEREDELEMENTS/$ELEMENTS)
 echo $RATIO
