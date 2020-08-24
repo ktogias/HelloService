@@ -20,7 +20,7 @@ Run unit tests:
         - docker exec hello-test-$CI_COMMIT_SHA ./vendor/bin/codecept run unit --xml --coverage --coverage-html --coverage-xml
         - docker cp hello-test-$CI_COMMIT_SHA:./php/tests/_output/ ./php/tests/_output
         - echo $(bash ./util/compute_code_coverage.sh)
-        - $(bash ./util/compute_code_coverage.sh) > ".69" 
+        - [ $(bash ./util/compute_code_coverage.sh) > ".69" ] 
        
 Run functional tests:
     stage: Functional test
