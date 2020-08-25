@@ -51,3 +51,9 @@ http://localhost:8080
 
 http://localhost:8080
 
+
+## View test and coverage analysis:
+
+ - Add 150.140.26.209 test.ntsdev2.sch.gr
+ - Visit http://test.ntsdev2.sch.gr/35/
+
