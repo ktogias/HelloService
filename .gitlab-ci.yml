@@ -23,7 +23,7 @@ Run unit tests:
         - export PREVIOUS_COVERAGE_DIR=/var/www/testoutput/$CI_PROJECT_ID/$CI_COMMIT_REF_NAME/_output
         - mkdir -p $PREVIOUS_COVERAGE_DIR | true
         - bash ./util/test_code_coverage.sh $CURRENT_COVERAGE_DIR/coverage.xml $PREVIOUS_COVERAGE_DIR/coverage.xml
-        - cp -a $CURRENT_COVERAGE_DIR $PREVIOUS_COVERAGE_DIR
+        - cp -a $CURRENT_COVERAGE_DIR/* $PREVIOUS_COVERAGE_DIR
        
 Run functional tests:
     stage: Functional test
